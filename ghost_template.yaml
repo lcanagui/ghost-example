@@ -242,7 +242,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${NAMESPACE}"
-          name: nodejs:10
+          name: nodejs:18
         env:
         - name: GHOST_DB_USER
           valueFrom:
