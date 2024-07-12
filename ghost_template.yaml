@@ -6,7 +6,7 @@ metadata:
   annotations:
     openshift.io/display-name: Ghost
     description: >-
-      Luc upgraded version of Openshift Ghost Template !
+      Luc upgraded version of Openshift Ghost Template with Nodejs 18 !
       Uses ghost-cli to install and run a Ghost powered website.
 
       If relying on a generated hostname, be sure to update the `url` environment variable
@@ -243,7 +243,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${NAMESPACE}"
-          name: node:18-bookworm-slim
+          name: nodejs:18
         env:
         - name: GHOST_DB_USER
           valueFrom:
