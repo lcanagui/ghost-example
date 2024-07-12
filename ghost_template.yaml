@@ -6,6 +6,7 @@ metadata:
   annotations:
     openshift.io/display-name: Ghost
     description: >-
+      Luc upgraded version of Openshift Ghost Template !
       Uses ghost-cli to install and run a Ghost powered website.
 
       If relying on a generated hostname, be sure to update the `url` environment variable
@@ -428,7 +429,7 @@ parameters:
   displayName: Git Repository URL
   description: The URL of the repository with your application source code.
   required: true
-  value: https://github.com/openshift-cs/ghost-example
+  value: https://github.com/lcanagui/ghost-example
 
 - name: SOURCE_REPOSITORY_REF
   displayName: Git Reference
