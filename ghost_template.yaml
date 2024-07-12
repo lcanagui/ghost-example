@@ -242,7 +242,7 @@ objects:
         from:
           kind: ImageStreamTag
           namespace: "${NAMESPACE}"
-          name: nodejs:18
+          name: node:18-bookworm-slim
         env:
         - name: GHOST_DB_USER
           valueFrom:

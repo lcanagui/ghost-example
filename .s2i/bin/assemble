@@ -60,8 +60,10 @@ if [ -z "$NODE_ENV" ]; then
   export NODE_ENV=production
 fi
 
+echo "--- Node version ..."
+node --version
 echo "---> Installing Ghost application ..."
-npm install --quiet ghost-cli@latest
+npm install --quiet ghost-cli@1.26.0
 echo "---> Creating Ghost directory ..."
 mkdir ghost-install
 echo "---> Installing Ghost ..."
