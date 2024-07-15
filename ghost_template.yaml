@@ -222,51 +222,6 @@ objects:
         storage: "${GHOST_VOLUME_CAPACITY}"
 
 - apiVersion: v1
-  kind: BuildConfig
-  metadata:
-    name: "${NAME}"
-    labels:
-      app: "${NAME}"
-    annotations:
-      template.alpha.openshift.io/wait-for-ready: "true"
-  spec:
-    nodeSelector:
-    source:
-      type: Git
-      git:
-        uri: "${SOURCE_REPOSITORY_URL}"
-        ref: "${SOURCE_REPOSITORY_REF}"
-      contextDir: "${CONTEXT_DIR}"
-    strategy:
-      type: Source
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          namespace: "${NAMESPACE}"
-          name: nodejs:18
-        env:
-        - name: GHOST_DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: "${NAME}-database"
-              key: database-user
-        - name: GHOST_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: "${NAME}-database"
-              key: database-password
-    output:
-      to:
-        kind: ImageStreamTag
-        name: "${NAME}:latest"
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
-    - type: GitHub
-      github:
-        secret: "${GITHUB_WEBHOOK_SECRET}"
-
-- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     name: "${NAME}"
@@ -323,11 +278,6 @@ objects:
             tcpSocket:
               port: 8080
             timeoutSeconds: 1
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                - "./copy_application_files.sh"
           name: "${NAME}"
           ports:
           - containerPort: 8080
@@ -349,7 +299,8 @@ objects:
         - "${NAME}"
         from:
           kind: ImageStreamTag
-          name: "${NAME}:latest"
+          name: "${NAME}:5-alpine"
+          namespace: "${NAMESPACE}"
     - type: ConfigChange
 
 parameters:
@@ -365,6 +316,7 @@ parameters:
     The exposed hostname that will route to the Ghost application. Leaving this blank will
     auto-generate a URL, but you will have to manually update the `url` environment variable
     in the DeploymentConfig.
+  value: "https://ghost-blog.apps.ocp4.innershift.sodigital.io"
 
 - name: GHOST_MEMORY_LIMIT
   displayName: Ghost Memory Limit
